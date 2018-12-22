@@ -1,0 +1,8 @@
+"exec:~/fulltextfeed http://newsfeed.zeit.de/index" mainstream
+"exec:~/fulltextfeed https://www.tagesschau.de/xml/rss2" mainstream
+
+# IT
+https://hackernoon.com/feed IT
+"exec:~/fulltextfeed https://news.ycombinator.com/rss" IT
+"exec:~/fulltextfeed https://www.heise.de/newsticker/heise-atom.xml" IT
+

@@ -1,0 +1,22 @@
+cache-file /data/news.db
+error-log /data/news.error.log
+
+article-sort-order date-asc
+
+# Reload news on start up
+reload-threads 5
+auto-reload yes
+
+# Never remove non-existing items in the cache
+cleanup-on-quit no
+
+# Keep all news forever
+max-items 0
+
+# These settings are overwritten by external -x command
+# reload-time 30
+# refresh-on-startup yes
+
+# Set user agent to something very common
+# https://techblog.willshouse.com/2012/01/03/most-common-user-agents/
+user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36"

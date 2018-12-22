@@ -1,0 +1,3 @@
+#!/bin/sh
+# Notice: Do not print anything here besides valid XML!
+curl -s http://fullfeedrss/makefulltextfeed.php?url=$1

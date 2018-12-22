@@ -1,0 +1,6 @@
+version: '2.1'
+services:
+
+  newsboat:
+    image: "newsboat-copy-data:2.12"
+    build: .
