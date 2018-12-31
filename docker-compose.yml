@@ -4,3 +4,8 @@ services:
   newsboat:
     image: "newsboat-copy-data:2.12"
     build: .
+    volumes:
+      - "${PWD}/data/:/data-to-copy/"
+      - "${PWD}/urls:/data/urls"
+  fullfeedrss:
+    image: "fivefilters-full-text-rss-docker:3.5"
