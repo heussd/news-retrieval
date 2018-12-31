@@ -7,7 +7,7 @@
 # /data/news.db.lock
 # /data/news.error.log
 FROM	alpine
-RUN 	apk add --no-cache --update newsboat
+RUN 	apk add --no-cache --update newsboat curl
 RUN   echo http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories && \
       apk add --no-cache --update dockerize
 
