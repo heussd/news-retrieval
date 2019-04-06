@@ -14,7 +14,7 @@ while :; do
   echo "Copying database..."
   cp -fv $newsDbToCopy /data/news.db ;
 
-  newsboat -u /data/urls -d /dev/fd/1 -l 5 -x reload;
+  newsboat -u /data/urls -d /dev/fd/1 -l 4 -x reload;
 
   echo "Copying database back..."
   cp -fv /data/news.db $newsDbToCopy;
