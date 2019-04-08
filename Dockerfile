@@ -11,7 +11,7 @@ RUN 	apk add --no-cache --update newsboat curl
 RUN   echo http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories && \
       apk add --no-cache --update dockerize
 
-RUN 	mkdir /root/.newsboat /data /data-to-copy/
+RUN 	mkdir /root/.newsboat /data
 
 WORKDIR	/root/
 COPY	config /root/.newsboat/
@@ -23,4 +23,4 @@ COPY		newsboat.sh .
 ENTRYPOINT	["./newsboat.sh"]
 
 # How often RSS feeds are queried, time in $(sleep)-format
-ENV		RELOAD_EVERY=20m
+ENV		RELOAD_EVERY=10m
