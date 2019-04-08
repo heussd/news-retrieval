@@ -2,7 +2,7 @@ version: '2.1'
 services:
 
   newsboat:
-    image: "newsboat-copy-data:2.12"
+    image: "heussd/newsboat:latest"
     build: .
     volumes:
       - "${PWD}/data/:/data-to-copy/"
