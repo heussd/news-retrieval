@@ -9,7 +9,7 @@
 FROM	alpine
 RUN 	apk add --no-cache --update newsboat curl
 RUN   echo http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories && \
-      apk add --no-cache --update dockerize
+      apk add --no-cache --update dockerize sqlite
 
 RUN 	mkdir /root/.newsboat /data
 
