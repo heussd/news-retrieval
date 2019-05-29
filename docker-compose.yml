@@ -8,4 +8,4 @@ services:
       - "${PWD}/:/data-to-copy/"
       - "${PWD}/urls:/data/urls"
   fullfeedrss:
-    image: "fivefilters-full-text-rss-docker:3.5"
+    image: "heussd/fivefilters-full-text-rss"
