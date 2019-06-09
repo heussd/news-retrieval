@@ -1,2 +1,3 @@
 "exec:~/fulltextfeed https://www.tagesschau.de/xml/rss2" mainstream
 https://boerse.ard.de/index~rss.xml
+https://www.example.com/pleasefailhere.rss
