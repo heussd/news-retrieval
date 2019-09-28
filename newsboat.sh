@@ -23,17 +23,18 @@ function wait() {
   sleep $RELOAD_EVERY
 }
 
-dockerize -wait http://fullfeedrss:80
+newsboat --version
+until curl http://fullfeedrss:80 &> /dev/null; do echo "Waiting for fullfeedrss..."; sleep 1; done
 
 while :; do
-  checkextfile $newsDbToCopy
-  cp -fv "$newsDbToCopy" "/data/news.db"
+  #checkextfile $newsDbToCopy
+  #cp -fv "$newsDbToCopy" "/data/news.db"
 
   newsboat -u /data/urls -d /dev/fd/1 -l 4 -x reload;
-  newsboat -u /data/urls -d /dev/fd/1 -l 4 -X;
+  #newsboat -u /data/urls -d /dev/fd/1 -l 4 -X;
 
   sqliteintcheck /data/news.db
-  cp -fv "/data/news.db" "$newsDbToCopy"
+  #cp -fv "/data/news.db" "$newsDbToCopy"
 
   wait
 done
