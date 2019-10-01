@@ -1,7 +1,12 @@
-.PHONY: multiarchbuild
+DOCKER_BUILDKIT=1
+IMAGE_NAME="heussd/newsboat:latest"
 
-multiarchbuild:
-	docker buildx rm nubuilder
+all: setup build clean
+.PHONY: all
+
+setup:
 	docker buildx create --name "nubuilder" --use
-	docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm/v6 -t heussd/newsboat:latest --push .
+build:
+	docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm/v6 -t $(IMAGE_NAME) --push .
+clean:
 	docker buildx rm nubuilder
