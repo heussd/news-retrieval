@@ -1,0 +1,51 @@
+#!/bin/bash
+set -o errexit
+set -o pipefail
+set -o nounset
+
+
+function fail {
+  echo -e "\\033[0;31m Error: $1 \\033[0m"
+  exit 1
+}
+
+URLS=$1
+SQLITE_DB=$2
+
+test -z "$URLS" && fail "First argument should specify the URLs text file, but was undefined"
+test -z "$SQLITE_DB" && fail "Second argument should specify the sqlite database, but was undefined"
+
+test -z "$FIVE_FILTERS_SERVICE" && fail "Environment variable FIVE_FILTERS_SERVICE is undefined"
+test -z "$RELOAD_EVERY" && fail "Environment variable RELOAD_EVERY is undefined"
+
+
+while :; do
+  newsboat --version || exit 0
+
+  echo "SQLITE_DB=$SQLITE_DB"
+  echo "FIVE_FILTERS_SERVICE=$FIVE_FILTERS_SERVICE"
+  echo "RELOAD_EVERY=$RELOAD_EVERY"
+
+  until eval "$(curl --output /dev/null --silent --max-time 1 --head \"http://$FIVE_FILTERS_SERVICE\")"; do
+      echo "Waiting for http://$FIVE_FILTERS_SERVICE to become available..."
+      sleep 1
+  done
+  ./full-text-feed "https://www.tagesschau.de/xml/rss2/" > /dev/null || fail "There was a problem with the full text retrieval script"
+
+
+  echo "Generating newsboat URLs list with full text retrieval as exec script..."
+  awk '$1!="" { print "\"exec:~/full-text-feed "$1"\" " }' "$URLS" > "$HOME/urls"
+
+
+  echo "Executing newsboat full reload..."
+  newsboat --url-file="$HOME/urls" --log-file=/dev/fd/1 -l 4 --cache-file="$SQLITE_DB" --execute=reload;
+  echo "Newsboat full reload complete"
+
+
+  echo "SQLite integrity check..."
+  sqlite3 "$SQLITE_DB" "pragma integrity_check;" || fail "SQLite integrity check failed!"
+
+
+  echo "Waiting $RELOAD_EVERY to reload..."
+  sleep "$RELOAD_EVERY"
+done

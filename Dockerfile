@@ -1,26 +1,23 @@
-# newsboat RSS Client
-# "The Mutt of the RSS clients"
+FROM	alpine/git as git
+WORKDIR	/cloned
+RUN		git clone --depth 1 https://github.com/heussd/dotfiles . 
 
-# Important files are
-# /data/urls
-# /data-to-copy/news.db
-# /data/news.db.lock
-# /data/news.error.log
-FROM	alpine
-RUN 	apk add --no-cache --update newsboat curl sqlite
 
-RUN 	mkdir /root/.newsboat /data
+FROM	heussd/newsboat
+RUN 	apk add --no-cache --update \
+            bash \
+            curl \
+            sqlite
 
 WORKDIR	/root/
-COPY	config /root/.newsboat/
+COPY	config /etc/newsboat/config
+COPY    --from=git /cloned/.config/newsboat/scripts/full-text-feed ./
+COPY    retrieve ./
+RUN		chmod -Rfv 755 full-text-feed retrieve
 
-COPY	fulltextfeed .
-RUN		chmod -Rfv 755 fulltextfeed
 
-COPY    newsboat.sh .
+ENV		RELOAD_EVERY=3h
+ENV     FIVE_FILTERS_SERVICE=fulltextfeed
 
-# Using CMD to allow easier overwriting this entrypoint
-CMD	["./newsboat.sh"]
+ENTRYPOINT [ "/root/retrieve" ]
 
-# How often RSS feeds are queried, time in $(sleep)-format
-ENV		RELOAD_EVERY=10m

@@ -1,4 +1,0 @@
-#!/bin/sh
-# Notice: Do not print anything here besides valid XML!
-curl --max-time 900 -s http://fullfeedrss/makefulltextfeed.php?url=$1
-if [ $? -ne 0 ]; then echo "curl command retuned non-zero code." && exit 1; fi

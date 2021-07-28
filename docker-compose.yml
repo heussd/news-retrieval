@@ -1,10 +1,13 @@
-version: '3.7'
 services:
-
-  newsboat:
-    image: "heussd/newsboat:latest"
+  news-retrieval:
+    image: "heussd/news-retrieval"
     build: .
     volumes:
       - "${PWD}/data:/data/"
+    environment: 
+      - FIVE_FILTERS_SERVICE=fullfeedrss
+    command:
+      - "/data/urls"
+      - "/data/sql.db"
   fullfeedrss:
     image: "heussd/fivefilters-full-text-rss"
