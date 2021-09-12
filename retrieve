@@ -30,6 +30,8 @@ while :; do
       echo "Waiting for http://$FIVE_FILTERS_SERVICE to become available..."
       sleep 1
   done
+
+  sleep 5 # Wait additional seconds for fivefilters
   ./full-text-feed "https://www.tagesschau.de/xml/rss2/" > /dev/null || fail "There was a problem with the full text retrieval script"
 
 
