@@ -1,5 +1,5 @@
 # Reload news on start up
-reload-threads 5
+reload-threads 1
 
 # Never remove non-existing items in the cache
 cleanup-on-quit no
